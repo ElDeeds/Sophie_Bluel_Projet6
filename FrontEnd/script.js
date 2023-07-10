@@ -235,10 +235,6 @@ function openModal() {
 
   const closeOverlay = document.querySelector('.overlay');
   closeOverlay.addEventListener('click', closeModal);
-
-  const overlayElement = document.querySelector('.overlay');
-
-  overlayElement.addEventListener('click', closeModal);
 }
 
 
