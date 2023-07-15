@@ -152,7 +152,7 @@ async function deleteWork(e, id) {
   const target = e.target;
   const figure = target.closest("figure");
   
-  // Affiche une boîte de dialogue de confirmation
+  // Boîte de dialogue de confirmation
   const confirmed = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
 
   if (confirmed) {
@@ -180,7 +180,7 @@ async function deleteWork(e, id) {
       }
     }
   } else {
-    // L'utilisateur a cliqué sur "Annuler", rien ne se passe.
+    // L'utilisateur clic sur "Annuler"
   }
 }
 
