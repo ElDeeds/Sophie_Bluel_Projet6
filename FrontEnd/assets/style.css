@@ -245,7 +245,12 @@ li:hover {
 
 .gallery img {
 	width: 100%;
+	height: 95%;
 
+}
+
+.modalGallery img {
+	height: 80%;
 }
 
 #contact {
@@ -578,6 +583,7 @@ footer nav ul {
 
 .modal img {
 	margin-bottom: 5px;
+	object-fit: cover;
 }
 
 .modal span {

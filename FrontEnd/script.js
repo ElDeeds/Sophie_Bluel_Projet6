@@ -1,6 +1,5 @@
 const allWorks = new Set();
 const allCats = new Set();
-let images = "";
 
 const galleryDivs = document.querySelectorAll('.gallery');
 const buttonsContainer = document.querySelector('.buttons');
@@ -150,30 +149,38 @@ async function displayWorks(filtre = null) {
 // Fonction pour supprimer un travail
 async function deleteWork(e, id) {
   const token = sessionStorage.getItem("token");
-  const target = e.target
-  const figure = target.closest("figure")
-  figure.remove()
+  const target = e.target;
+  const figure = target.closest("figure");
+  
+  // Affiche une boîte de dialogue de confirmation
+  const confirmed = confirm("Êtes-vous sûr de vouloir supprimer cette image ?");
 
-  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (confirmed) {
+    figure.remove();
 
-  if (response.ok) {
-    console.log("Élément supprimé avec succès.");
-    // Met à jour l'affichage des éléments
-    const figureElements = document.querySelectorAll(`.Figure${id}`);
-    for (const figureElement of figureElements) {
-      figureElement.remove();
-    }
-    for (const work of allWorks) {
-      if (work.id == id) {
-        allWorks.delete(work)
-        break;
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      console.log("Élément supprimé avec succès.");
+      // Met à jour l'affichage des éléments
+      const figureElements = document.querySelectorAll(`.Figure${id}`);
+      for (const figureElement of figureElements) {
+        figureElement.remove();
+      }
+      for (const work of allWorks) {
+        if (work.id == id) {
+          allWorks.delete(work);
+          break;
+        }
       }
     }
+  } else {
+    // L'utilisateur a cliqué sur "Annuler", rien ne se passe.
   }
 }
 
@@ -406,14 +413,7 @@ validateButton.addEventListener('click', async (event) => {
   event.preventDefault();
   const token = sessionStorage.getItem("token");
   const formData = new FormData(form);
-  /*
 
-  a faire dans le change avant le preview (afficher preview si image correct, sinon ne rien fair et afficher erreur)
-  const file = fileInput.files[0];
-
-  // Vérifie le type de fichier
-
-*/
   formData.append("image", image)
   formData.append('title', titleInput.value);
   formData.append('category', catInput.value);
